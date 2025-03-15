@@ -1,5 +1,15 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+This portfolio is no where near finished! There is still work to be done! 
+
+## To-do 
+
+Favicon,
+Photo for Hero, (Pulled from github)
+More projects too add! 
+Clean up the code!
+
+
 ## Getting Started
 
 First, run the development server:

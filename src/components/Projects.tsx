@@ -6,19 +6,19 @@ const projects = [
   {
     title: "Portfolio Website",
     description: "A sleek portfolio built with Next.js & Tailwind.",
-    github: "https://github.com/yourgithub/portfolio",
-    live: "https://yourportfolio.com",
+    github: "https://github.com/Dev-Coral-RP/portfolio",
+    live: "https://devcoral.xyz",
   },
   {
-    title: "E-Commerce Store",
-    description: "An online shop with Next.js & Stripe payments.",
-    github: "https://github.com/yourgithub/ecommerce",
-    live: "https://yourecommerce.com",
+    title: "Discord Chat Bot",
+    description: "A Discord bot using Discord.js, With a full Frontend & Backend.  ",
+    github: "",
+    live: "https://coralbot.xyz",
   },
   {
-    title: "Chat App",
-    description: "A real-time chat application using WebSockets.",
-    github: "https://github.com/yourgithub/chat-app",
+    title: "Coral AI",
+    description: "A small side project, using ChatGPT API, Project was never finshed. This project was wrritten in Python using a flask server.",
+    github: "https://github.com/Dev-Coral-RP/Coral-AI",
     live: "",
   },
 ];

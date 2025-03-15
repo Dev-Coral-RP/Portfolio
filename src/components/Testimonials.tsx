@@ -2,9 +2,7 @@
 import { motion } from "framer-motion";
 
 const testimonials = [
-  { name: "John Doe", feedback: "Amazing work! Highly recommended." },
-  { name: "Jane Smith", feedback: "Great attention to detail and modern design!" },
-  { name: "Michael Lee", feedback: "A fantastic developer who delivers quality." },
+  { name: "N/A", feedback: "N/A" },
 ];
 
 const Testimonials = () => {
