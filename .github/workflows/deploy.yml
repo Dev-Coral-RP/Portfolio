@@ -1,0 +1,35 @@
+name: Deploy Coral Bot
+
+on:
+  push:
+    branches:
+      - main  # Change this if using a different branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH into VPS & Deploy
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd ~/coral-bot/Bot
+            git config pull.rebase false
+            git pull origin main
+            npm install
+            pm2 restart coral-bot
+
+            cd ~/coral-bot/Bot/dashboard/backend
+            git pull origin main
+            npm install
+            pm2 restart dashboard-backend
+
+            cd ~/coral-bot/Bot/dashboard/frontend
+            git pull origin main
+            npm install
+            npm run build
+            sudo cp -r build/* /var/www/coralbot.xyz/
+            sudo systemctl restart nginx
