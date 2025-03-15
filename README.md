@@ -3,13 +3,13 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 This portfolio is no where near finished! There is still work to be done! 
 
 ## To-do 
-
+```
 Favicon,
 Contact Me! - (To not use static build in prod?)
 Photo for Hero, (Pulled from github)
 More projects too add! 
 Clean up the code!
-
+```
 
 ## Getting Started
 
