@@ -31,7 +31,9 @@ const Testimonials = () => {
             className="flex flex-col items-center justify-center p-6 bg-gray-900/80 rounded-xl shadow-lg 
                        hover:scale-105 transition border border-gray-700 shadow-green-500/50"
           >
-            <p className="text-lg italic text-gray-300">"{testimonial.feedback}"</p>
+            <p className="text-lg italic text-gray-300">
+              &quot;{testimonial.feedback}&quot;  {/* ✅ Fix: Escaped double quotes */}
+            </p>
             <h3 className="mt-4 text-xl font-bold text-green-400">{testimonial.name}</h3>
           </motion.div>
         ))}

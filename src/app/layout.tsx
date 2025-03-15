@@ -1,12 +1,10 @@
 import "./globals.css";
-import type { Metadata } from "next";
 import BackgroundDots from "@/components/BackgroundDots";
 import Hero from "@/components/Hero";
 import Features from "@/components/Features";
 import Projects from "@/components/Projects";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
-import ContactForm from "@/components/ContactForm";
 
 export const metadata = {
   title: "Dev Coral / Tom | Full-Stack Developer",
@@ -49,7 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Projects />
           <Testimonials />
         
-        </main>
+          {children}</main>
         <Footer />
       </body>
     </html>

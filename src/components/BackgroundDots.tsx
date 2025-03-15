@@ -1,51 +1,46 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-const generateDots = (numDots: number) => {
+// 🔹 Define Type for Dots
+interface Dot {
+  id: string;
+  x: number;
+  y: number;
+  delay: number;
+}
+
+// 🔹 Function to generate dots with unique positions
+const generateDots = (numDots: number): Dot[] => {
   return Array.from({ length: numDots }, () => ({
     id: crypto.randomUUID(),
-    x: Math.random() * window.innerWidth,
-    y: Math.random() * window.innerHeight,
+    x: Math.random() * window.innerWidth, // ✅ Random X position across the screen
+    y: Math.random() * window.innerHeight, // ✅ Random Y position across the screen
     delay: Math.random() * 5,
   }));
 };
 
 const BackgroundDots = () => {
-  const [dots, setDots] = useState([]);
+  const [dots, setDots] = useState<Dot[]>([]); // ✅ Explicitly define state type
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setDots(generateDots(220)); // ✅ Increase number of dots
+      setDots(generateDots(220)); // ✅ Now TypeScript understands the type
       window.addEventListener("scroll", () => setScrollY(window.scrollY));
     }
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+    <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-[-1]">
       {dots.map((dot) => (
         <motion.div
           key={dot.id}
-          initial={{ opacity: 0, scale: 0.5, x: dot.x, y: dot.y }}
-          animate={{
-            opacity: 1,
-            scale: 1,
-            x: [dot.x, dot.x + Math.random() * 50 - 25, dot.x - Math.random() * 50 + 25, dot.x],
-            y: [dot.y, dot.y + Math.random() * 50 - 25, dot.y - Math.random() * 50 + 25, dot.y],
-          }}
-          transition={{
-            duration: Math.random() * 5 + 3,
-            repeat: Infinity,
-            delay: dot.delay,
-            ease: "easeInOut",
-          }}
-          className={`absolute rounded-full w-2 h-2 transition-colors duration-500 
-                      ${
-                        dot.y + scrollY < document.getElementById("testimonials")?.offsetTop
-                          ? "bg-white"
-                          : "bg-green-400"
-                      }`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2, delay: dot.delay }}
+          className={`absolute w-2 h-2 rounded-full ${scrollY > 500 ? "bg-green-400" : "bg-white"}`}
+          style={{ top: dot.y, left: dot.x }}
         />
       ))}
     </div>

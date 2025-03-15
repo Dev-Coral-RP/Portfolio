@@ -1,25 +1,35 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
+// 🔹 Define types properly
+interface FormData {
+  name: string;
+  email: string;
+  message: string;
+}
+
+// 🔹 Typing animations for placeholders
 const typingSequences = {
   name: ["Enter your name", "What's your name?", "Full Name"],
   email: ["Enter your email", "Your best email", "Example: user@example.com"],
   message: ["Write your message", "How can I help?", "Type something meaningful"],
 };
+
 const typingSpeed = 100;
 
 const useTypingEffect = (texts: string[]) => {
   const [placeholder, setPlaceholder] = useState(texts[0]);
-  const [showCursor, setShowCursor] = useState(true);
+  const showCursor = useRef(true);
 
   useEffect(() => {
     let i = 0, j = 0, currentText = "";
+    
     const interval = setInterval(() => {
       if (j < texts[i].length) {
         currentText += texts[i][j];
-        setPlaceholder(currentText + (showCursor ? " |" : ""));
+        setPlaceholder(currentText + (showCursor.current ? " |" : ""));
         j++;
       } else {
         setTimeout(() => {
@@ -30,18 +40,21 @@ const useTypingEffect = (texts: string[]) => {
       }
     }, typingSpeed);
 
-    const cursorInterval = setInterval(() => setShowCursor((prev) => !prev), 500);
+    const cursorInterval = setInterval(() => {
+      showCursor.current = !showCursor.current;
+    }, 500);
+
     return () => {
       clearInterval(interval);
       clearInterval(cursorInterval);
     };
-  }, [texts]);
+  }, [texts]); // ✅ Removed `showCursor` from dependencies
 
   return placeholder;
 };
 
 const ContactForm = () => {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
   const [submitted, setSubmitted] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -49,7 +62,7 @@ const ContactForm = () => {
   const emailPlaceholder = useTypingEffect(typingSequences.email);
   const messagePlaceholder = useTypingEffect(typingSequences.message);
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: FormData) => {
     setSubmitted(true);
     console.log("Form Data:", data);
 
@@ -89,7 +102,7 @@ const ContactForm = () => {
             className="w-full p-3 bg-gray-800 rounded-lg mt-1 text-white border border-gray-600 
                        focus:border-green-500 focus:ring-2 focus:ring-green-500 transition-all outline-none text-gray-300"
           />
-          {errors.name && <p className="text-red-400 text-sm mt-1">{errors.name.message as string}</p>}
+          {errors.name && <p className="text-red-400 text-sm mt-1">{errors.name.message}</p>}
         </div>
 
         <div className="mb-4">
@@ -104,7 +117,7 @@ const ContactForm = () => {
             className="w-full p-3 bg-gray-800 rounded-lg mt-1 text-white border border-gray-600 
                        focus:border-green-500 focus:ring-2 focus:ring-green-500 transition-all outline-none text-gray-300"
           />
-          {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email.message as string}</p>}
+          {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email.message}</p>}
         </div>
 
         <div className="mb-4">
@@ -116,7 +129,7 @@ const ContactForm = () => {
             className="w-full p-3 bg-gray-800 rounded-lg mt-1 text-white border border-gray-600 
                        focus:border-green-500 focus:ring-2 focus:ring-green-500 transition-all outline-none text-gray-300"
           ></textarea>
-          {errors.message && <p className="text-red-400 text-sm mt-1">{errors.message.message as string}</p>}
+          {errors.message && <p className="text-red-400 text-sm mt-1">{errors.message.message}</p>}
         </div>
 
         <motion.button
