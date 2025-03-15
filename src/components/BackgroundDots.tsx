@@ -10,10 +10,17 @@ interface Dot {
   delay: number;
 }
 
+// 🔹 Custom UUID Function (No `crypto.randomUUID()`)
+const generateUUID = () => {
+  return (
+    Date.now().toString(36) + Math.random().toString(36).substring(2, 10)
+  );
+};
+
 // 🔹 Function to generate dots with unique positions
 const generateDots = (numDots: number): Dot[] => {
   return Array.from({ length: numDots }, () => ({
-    id: crypto.randomUUID(),
+    id: generateUUID(), // ✅ Generates a unique ID
     x: Math.random() * window.innerWidth, // ✅ Random X position across the screen
     y: Math.random() * window.innerHeight, // ✅ Random Y position across the screen
     delay: Math.random() * 5,
@@ -21,12 +28,12 @@ const generateDots = (numDots: number): Dot[] => {
 };
 
 const BackgroundDots = () => {
-  const [dots, setDots] = useState<Dot[]>([]); // ✅ Explicitly define state type
+  const [dots, setDots] = useState<Dot[]>([]);
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setDots(generateDots(220)); // ✅ Now TypeScript understands the type
+      setDots(generateDots(220)); // ✅ TypeScript now understands the type
       window.addEventListener("scroll", () => setScrollY(window.scrollY));
     }
   }, []);
