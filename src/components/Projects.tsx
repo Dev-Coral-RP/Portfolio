@@ -21,6 +21,12 @@ const projects = [
     github: "https://github.com/Dev-Coral-RP/Coral-AI",
     live: "",
   },
+  {
+    title: "Reddit Remake",
+    description: "Small Project made within a few hours. This project is only UI.  ",
+    github: "https://github.com/Dev-Coral-RP/Reddit-Remake",
+    live: "https://reddit-remake.vercel.app/",
+  },
 ];
 
 const Projects = () => {

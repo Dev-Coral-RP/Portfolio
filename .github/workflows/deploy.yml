@@ -20,6 +20,5 @@ jobs:
             git pull origin main
             npm install
             npm run build
-            npm run postbuild
-            sudo cp -r build/* /var/www/devcoral.xyz/
-            sudo systemctl restart nginx
+            sudo cp -r out/* /var/www/devcoral.xyz/
+            
