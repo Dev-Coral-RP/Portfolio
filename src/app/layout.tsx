@@ -3,8 +3,9 @@ import BackgroundDots from "@/components/BackgroundDots";
 import Hero from "@/components/Hero";
 import Features from "@/components/Features";
 import Projects from "@/components/Projects";
-import Testimonials from "@/components/Testimonials";
+import AboutMe from "@/components/AboutMe";
 import Footer from "@/components/Footer";
+import Services from "@/components/Services";
 
 export const metadata = {
   title: "Dev Coral | Full-Stack Developer",
@@ -43,10 +44,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <BackgroundDots />
         <main className="container mx-auto px-6">
           <Hero />
+          <AboutMe />
           <Features />
           <Projects />
-          <Testimonials />
-        
+          <Services />
           {children}</main>
         <Footer />
       </body>
