@@ -4,28 +4,19 @@ import { motion } from "framer-motion";
 
 // 🔹 Define Type for Dots
 interface Dot {
-  id: string;
+  id: number;
   x: number;
   y: number;
   delay: number;
-  size: number;
 }
 
-// 🔹 Custom UUID Function (No `crypto.randomUUID()`)
-const generateUUID = () => {
-  return (
-    Date.now().toString(36) + Math.random().toString(36).substring(2, 10)
-  );
-};
-
-// 🔹 Function to generate dots with random positions & sizes
+// 🔹 Function to generate dots with random positions
 const generateDots = (numDots: number): Dot[] => {
-  return Array.from({ length: numDots }, () => ({
-    id: generateUUID(),
+  return Array.from({ length: numDots }, (_, i) => ({
+    id: i,
     x: Math.random() * window.innerWidth,
     y: Math.random() * window.innerHeight,
     delay: Math.random() * 5,
-    size: Math.random() * 3 + 2, // ✅ Random size between 2px - 5px
   }));
 };
 
@@ -35,30 +26,8 @@ const BackgroundDots = () => {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setDots(generateDots(150)); // ✅ Generates dots on mount
-
-      // 🔹 Update dots every 5 seconds to create movement
-      const interval = setInterval(() => {
-        setDots((prevDots) =>
-          prevDots.map((dot) => ({
-            ...dot,
-            x: Math.max(0, Math.min(window.innerWidth, dot.x + (Math.random() * 50 - 25))), // ✅ Small random drift
-            y: Math.max(0, Math.min(window.innerHeight, dot.y + (Math.random() * 50 - 25))),
-          }))
-        );
-      }, 5000);
-
-      // 🔹 Track scroll position for parallax effect & color changes
-      const handleScroll = () => {
-        setScrollY(window.scrollY);
-      };
-
-      window.addEventListener("scroll", handleScroll);
-
-      return () => {
-        clearInterval(interval);
-        window.removeEventListener("scroll", handleScroll);
-      };
+      setDots(generateDots(120)); // ✅ Keep dots rendered at all times
+      window.addEventListener("scroll", () => setScrollY(window.scrollY));
     }
   }, []);
 
@@ -67,26 +36,30 @@ const BackgroundDots = () => {
       {dots.map((dot) => (
         <motion.div
           key={dot.id}
-          initial={{ opacity: 0, scale: 0.5 }}
+          initial={{ opacity: 0 }}
           animate={{
             opacity: 1,
-            scale: [0.8, 1, 0.8], // 🔄 Pulsating effect
-            x: dot.x + (Math.random() * 50 - 25), // ✅ Moves slightly
-            y: dot.y + (Math.random() * 50 - 25 - scrollY * 0.02), // ✅ Parallax effect
+            x: [
+              dot.x,
+              dot.x + (Math.random() * 40 - 20), // Move slightly left/right
+              dot.x + (Math.random() * 60 - 30), // Keep drifting
+            ],
+            y: [
+              dot.y,
+              dot.y + (Math.random() * 40 - 20), // Move slightly up/down
+              dot.y + (Math.random() * 60 - 30), // Keep drifting
+            ],
           }}
           transition={{
-            duration: 5,
             repeat: Infinity,
+            repeatType: "mirror",
+            duration: 5 + Math.random() * 5,
             ease: "easeInOut",
           }}
-          className="absolute rounded-full transition-colors duration-1000" // ✅ Smooth color transition
-          style={{
-            top: dot.y,
-            left: dot.x,
-            width: `${dot.size}px`, // ✅ Random dot size
-            height: `${dot.size}px`,
-            backgroundColor: scrollY > 800 ? "rgb(34, 197, 94)" : Math.random() > 0.5 ? "white" : "rgb(59, 130, 246)", // ✅ White & blue normally, turns green in testimonials
-          }}
+          className={`absolute w-2 h-2 rounded-full ${
+            scrollY > 500 ? "bg-green-400" : "bg-white"
+          }`}
+          style={{ top: dot.y, left: dot.x }}
         />
       ))}
     </div>
