@@ -7,13 +7,13 @@ import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 
 export const metadata = {
-  title: "Dev Coral / Tom | Full-Stack Developer",
+  title: "Dev Coral | Full-Stack Developer",
   description: "A full-stack developer specializing in Next.js, React, and Tailwind CSS. Explore my projects and skills.",
   keywords: "Full-Stack Developer, Next.js, React, JavaScript, Tailwind CSS, Web Development",
   author: "Tom",
   robots: "index, follow",
   openGraph: {
-    title: "Your Name | Full-Stack Developer",
+    title: "Dev Coral| Full-Stack Developer",
     description: "A full-stack developer specializing in modern web technologies.",
     url: "https://devcoral.xyz",
     type: "website",
@@ -29,8 +29,8 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     site: "@yourhandle",
-    title: "Your Name | Full-Stack Developer",
-    description: "A full-stack developer specializing in modern web technologies.",
+    title: "Dev Coral | Full-Stack Developer",
+    description: "A full-stack developer specializing in modern web technologies1.",
     image: "https://devcoral.xyz/twitter-card.jpg",
   },
 };
